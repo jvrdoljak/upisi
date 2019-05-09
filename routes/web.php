@@ -15,8 +15,10 @@ Route::get('/', 'WelcomeController@index');
 Route::get('/welcome/demo', 'WelcomeController@demo');
 
 Route::get('/upisi/demo', 'UpisiController@demo');
-Route::get('/upisi/dashboard', 'UpisiController@dashboard');
+Route::get('/upisi/administration', 'UpisiController@dashboard');
 Route::get('/upisi/list', 'UpisiController@list');
 Route::resource('upisi/predmeti', 'PredmetController');
 Route::resource('upisi/smjerovi', 'SmjerController');
 Route::resource('upisi/prijave', 'PrijavaController');
+Route::resource('upisi/odabirsmjera', 'OdabirSmjeraController');
+Route::resource('upisi/kreiranjeranglisti', 'KreiranjeRangListiController');

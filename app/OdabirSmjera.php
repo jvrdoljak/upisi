@@ -4,16 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Prijava extends Model
+class OdabirSmjera extends Model
 {
-    protected $table = 'prijava';
-
+    protected $table = 'prijava_smjer';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'ime', 'prezime', 'ime_oca','email','prosjek',
+        'prijava', 'smjer', 'izbor','bodovi',
     ];
 }

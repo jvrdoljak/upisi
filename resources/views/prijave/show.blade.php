@@ -22,7 +22,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Naziv:</strong>
-                {{ $prijava->naziv }}
+                {{ $prijava->ime }}
             </div>
         </div>
     </div>

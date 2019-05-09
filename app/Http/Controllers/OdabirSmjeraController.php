@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Smjer;
 use App\OdabirSmjera;
-class SmjerController extends Controller
+use App\Prijava;
+use App\Smjer;
+
+class OdabirSmjeraController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +16,8 @@ class SmjerController extends Controller
      */
     public function index()
     {
-        $smjerovi = Smjer::latest()->paginate(10);
-        return view('smjerovi.index', compact('smjerovi'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
-    }
 
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -27,9 +26,8 @@ class SmjerController extends Controller
      */
     public function create()
     {
-        return view('smjerovi.create');
+        //
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -40,13 +38,14 @@ class SmjerController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'naziv' => 'required|max:200',
+            'prijava' => 'required',
+            'smjer' => 'required',
+            'izbor' => 'required',
+            'bodovi' => 'required'
         ]);
-        Smjer::create($request->all());
-        return redirect()->route('smjerovi.index')
-                        ->with('success', 'Smjer created successfully');
+        OdabirSmjera::create($request->all());
+        return view('welcome.index')->with('success','Uspješno kreirana prijava');
     }
-
 
     /**
      * Display the specified resource.
@@ -54,12 +53,15 @@ class SmjerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($email)
     {
-        $smjer = Smjer::find($id);
-        return view('smjerovi.show', compact('smjer'));
+        //dohvacanje ID korisnika koji kreira prijavu
+        $korisnik = Prijava::select()->where('email', '=', $email )->get();
+        $korisnik = $korisnik[0];
+        //dohvacanje svih smjerova
+        $smjerovi = Smjer::all();
+        return view('odabir.show', compact('korisnik'), compact('smjerovi'), compact('izbor'));
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -69,10 +71,8 @@ class SmjerController extends Controller
      */
     public function edit($id)
     {
-        $smjer = Smjer::find($id);
-        return view('smjerovi.edit', compact('smjer'));
+        //
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -83,14 +83,8 @@ class SmjerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        request()->validate([
-            'naziv' => 'required|max:200',
-        ]);
-        Smjer::find($id)->update($request->all());
-        return redirect()->route('smjerovi.index')
-                        ->with('success','Smjer je uspješno kreiran');
+        //
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -100,9 +94,6 @@ class SmjerController extends Controller
      */
     public function destroy($id)
     {
-        OdabirSmjera::select()->where('smjer', '=', $id)->delete();
-        Smjer::find($id)->delete();
-        return redirect()->route('smjerovi.index')
-                        ->with('success','Smjer deleted successfully');
+        //
     }
 }

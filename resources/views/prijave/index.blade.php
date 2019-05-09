@@ -28,10 +28,12 @@
 
       <table class="table table-bordered">
         <tr>
-          <th>Id</th>
+          <th>Redni broj</th>
           <th>Ime</th>
           <th>Prezime</th>
           <th>Ime oca</th>
+          <th>Email</th>
+          <th>Prosjek</th>
           <th width="280px">Akcija</th>
         </tr>
         @foreach ($prijave as $prijava)
@@ -40,6 +42,8 @@
             <td>{{ $prijava->ime }}</td>
             <td>{{ $prijava->prezime }}</td>
             <td>{{ $prijava->ime_oca }}</td>
+            <td>{{ $prijava->email }}</td>
+            <td>{{ $prijava->prosjek }}</td>
             <td>
               <a class="btn btn-info" href="{{ route('prijave.show', $prijava->id) }}">Prikaz</a>
               <a class="btn btn-primary" href="{{ route('prijave.edit', $prijava->id) }}">Izmjena</a>

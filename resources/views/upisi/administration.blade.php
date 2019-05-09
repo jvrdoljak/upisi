@@ -6,7 +6,6 @@
 
 @section('content')
   @include('upisi.includes.header')
-  @include('upisi.includes.breadcrumb')
   @include('layouts.upisi.dashboard')
 @stop
 

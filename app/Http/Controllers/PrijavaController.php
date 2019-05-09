@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Prijava;
-
+use App\OdabirSmjera;
 class PrijavaController extends Controller
 {
     /**
@@ -40,11 +40,14 @@ class PrijavaController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'naziv' => 'required|max:200',
+            'email' => 'required|max:255|unique:prijava',
+            'ime' => 'required|max:255',
+            'ime_oca' => 'required|max:255',
+            'prezime' => 'required|max:255',
+            'prosjek' => 'required',
         ]);
         Prijava::create($request->all());
-        return redirect()->route('prijave.index')
-                        ->with('success', 'Prijava uspješno kreirana');
+        return redirect()->route('odabirsmjera.show', $request['email']);
     }
 
 
@@ -85,7 +88,11 @@ class PrijavaController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'naziv' => 'required|max:200',
+            'email' => 'required|max:255',
+            'ime' => 'required|max:255',
+            'ime_oca' => 'required|max:255',
+            'prezime' => 'required|max:255',
+            'prosjek' => 'required',
         ]);
         Prijava::find($id)->update($request->all());
         return redirect()->route('prijave.index')
@@ -102,6 +109,7 @@ class PrijavaController extends Controller
      */
     public function destroy($id)
     {
+        OdabirSmjera::select()->where('prijava', '=', $id)->delete();
         Prijava::find($id)->delete();
         return redirect()->route('prijave.index')
                         ->with('success','Prijava uspješno pobrisana');

@@ -12,13 +12,10 @@
       <a class="js-scroll-trigger" href="{{ url('/') }}">Naslovnica</a>
     </li>
     <li class="sidebar-nav-item">
-      <a class="js-scroll-trigger" href="{{ url('/upisi/dashboard') }}">Upisi</a>
+      <a class="js-scroll-trigger" href="{{ url('/upisi/kreiranjeranglisti') }}">Rang liste</a>
     </li>
     <li class="sidebar-nav-item">
-      <a class="js-scroll-trigger" href="{{ url('/welcome/demo') }}">Naslovnica - demo</a>
-    </li>
-    <li class="sidebar-nav-item">
-      <a class="js-scroll-trigger" href="{{ url('/upisi/demo') }}">Admin - demo</a>
+      <a class="js-scroll-trigger" href="{{ url('/upisi/demo') }}">Upiši se</a>
     </li>
   </ul>
 </nav>

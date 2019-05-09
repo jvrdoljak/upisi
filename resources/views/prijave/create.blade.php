@@ -1,8 +1,8 @@
 @extends('layouts.upisi')
 
-@section('leftPanel')
+{{-- @section('leftPanel')
   @include('upisi.includes.navigation')
-@stop
+@stop --}}
 
 @section('content')
     <div class="row">
@@ -10,9 +10,9 @@
             <div class="pull-left">
                 <h2>Dodavanje nove prijave</h2>
             </div>
-            <div class="pull-right">
+            {{-- <div class="pull-right">
                 <a class="btn btn-primary" href="{{ route('prijave.index') }}"> Povratak</a>
-            </div>
+            </div> --}}
         </div>
     </div>
     <hr>

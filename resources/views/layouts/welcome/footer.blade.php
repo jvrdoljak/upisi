@@ -1,7 +1,7 @@
 <!-- Footer -->
 <footer class="footer text-center">
   <div class="container">
-    <ul class="list-inline mb-5">
+    {{-- <ul class="list-inline mb-5">
       <li class="list-inline-item">
         <a class="social-link rounded-circle text-white mr-3" href="#">
           <i class="icon-social-facebook"></i>
@@ -17,7 +17,7 @@
           <i class="icon-social-github"></i>
         </a>
       </li>
-    </ul>
-    <p class="text-muted small mb-0">Copyright &copy; Your Website 2017</p>
+    </ul> --}}
+    <p class="text-muted small mb-0">Sva prava pridržana &copy; upisi.xyz</p>
   </div>
 </footer>

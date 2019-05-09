@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 //use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\OdabirSmjera;
+use App\Prijava;
+use App\Smjer;
+use App\Predmet;
 
 class UpisiController extends Controller
 {
@@ -25,7 +29,10 @@ class UpisiController extends Controller
      */
     public function dashboard()
     {
-        return view('upisi.dashboard', []);
+        $counts['prijava'] = Prijava::select()->count('id');
+        $counts['smjer'] = Smjer::select()->count('id');
+        $counts['predmet'] = Predmet::select()->count('id');
+        return view('upisi.administration', compact('counts'));
     }
 
     /**
@@ -36,15 +43,5 @@ class UpisiController extends Controller
     public function list()
     {
         return view('upisi.list', []);
-    }
-
-    /**
-     * Demo stranica za UPISI layout.
-     *
-     * @return Response
-     */
-    public function demo()
-    {
-        return view('upisi.demo', []);
     }
 }
