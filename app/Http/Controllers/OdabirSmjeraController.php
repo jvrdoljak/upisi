@@ -60,7 +60,7 @@ class OdabirSmjeraController extends Controller
         $korisnik = $korisnik[0];
         //dohvacanje svih smjerova
         $smjerovi = Smjer::all();
-        return view('odabir.show', compact('korisnik'), compact('smjerovi'), compact('izbor'));
+        return view('odabir.show', compact('korisnik'), compact('smjerovi'));
     }
 
     /**

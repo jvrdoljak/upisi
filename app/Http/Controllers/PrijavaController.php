@@ -59,8 +59,8 @@ class PrijavaController extends Controller
      */
     public function show($id)
     {
-        $smjer = Prijava::find($id);
-        return view('prijave.show', compact('smjer'));
+        $prijava = Prijava::find($id);
+        return view('prijave.show', compact('prijava'));
     }
 
 
