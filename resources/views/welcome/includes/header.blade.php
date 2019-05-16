@@ -12,6 +12,7 @@
         </div>
     @endif
     <h1 class="mb-1">Srednja strukovna škola</h1>
+    <h3> {{ Auth::check() ? "Logged in" : "Logged out" }} </h3>
     <h3 class="mb-5">
       <em>Dobrodošli na stranicu</em>
     </h3>
