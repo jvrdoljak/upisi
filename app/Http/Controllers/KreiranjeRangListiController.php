@@ -50,6 +50,7 @@ class KreiranjeRangListiController extends Controller
      */
     public function show($smjerId)
     {
+        $korisnici = [];
         $prijaveNaSmjer = OdabirSmjera::select()->where('smjer', '=', $smjerId)->orderBy('bodovi', 'desc')->get();
         foreach($prijaveNaSmjer as $prijavaNaSmjer){
             $korisnici[$prijavaNaSmjer['prijava']] = Prijava::select('ime', 'prezime','ime_oca', 'prosjek')->where('id', '=', $prijavaNaSmjer['prijava'])->get();
