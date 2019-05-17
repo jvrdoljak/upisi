@@ -7,6 +7,10 @@ use App\Smjer;
 use App\OdabirSmjera;
 class SmjerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

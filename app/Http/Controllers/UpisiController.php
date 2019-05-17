@@ -12,6 +12,10 @@ use App\Predmet;
 
 class UpisiController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Početna stranica za upise.
      *
@@ -33,15 +37,5 @@ class UpisiController extends Controller
         $counts['smjer'] = Smjer::select()->count('id');
         $counts['predmet'] = Predmet::select()->count('id');
         return view('upisi.administration', compact('counts'));
-    }
-
-    /**
-     * Lista prijava.
-     *
-     * @return Response
-     */
-    public function list()
-    {
-        return view('upisi.list', []);
     }
 }

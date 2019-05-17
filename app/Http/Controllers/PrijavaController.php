@@ -7,6 +7,10 @@ use App\Prijava;
 use App\OdabirSmjera;
 class PrijavaController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *

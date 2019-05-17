@@ -12,20 +12,18 @@
 */
 Route::group(['middleware' => ['web']], function () {
     //Route za autentifikaciju
-    // Route::get('auth/login', 'Auth\LoginController@getLogin');
-    // Route::post('auth/login', 'Auth\LoginController@postLogin');
-    // Route::get('auth/logout', 'Auth\LoginController@getLogout');
+    Route::get('/login', 'Auth\LoginController@showLoginForm');
+    Route::post('/login', 'Auth\LoginController@login');
+    Route::get('/logout', 'Auth\LoginController@logout');
 
-    // Route::get('auth/register','Auth\RegisterController@getRegister');
-    // Route::post('auth/register','Auth\RegisterController@postRegister');
-    Auth::routes();
+    Route::get('/register','Auth\RegisterController@showRegistrationForm');
+    Route::post('/register','Auth\RegisterController@register');
+    //Auth::routes();
 
     Route::get('/', 'WelcomeController@index');
     Route::get('/welcome/demo', 'WelcomeController@demo');
 
-    Route::get('/upisi/demo', 'UpisiController@demo');
     Route::get('/upisi/administration', 'UpisiController@dashboard');
-    Route::get('/upisi/list', 'UpisiController@list');
     Route::resource('upisi/predmeti', 'PredmetController');
     Route::resource('upisi/smjerovi', 'SmjerController');
     Route::resource('upisi/prijave', 'PrijavaController');
