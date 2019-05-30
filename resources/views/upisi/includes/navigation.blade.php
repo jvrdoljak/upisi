@@ -10,7 +10,7 @@
     <div id="main-menu" class="main-menu collapse navbar-collapse">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="{{ url('/') }}"> <i class="menu-icon fa fa-dashboard"></i>Povratak na naslovnicu</a>
+                <a href="{{ url('/') }}"> <i class="menu-icon fa fa-home"></i>Povratak na naslovnicu</a>
             </li>
             <li class="active">
                 <a href="{{ url('/upisi/administration') }}"> <i class="menu-icon fa fa-dashboard"></i>Administracija</a>

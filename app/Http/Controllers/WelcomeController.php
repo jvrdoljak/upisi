@@ -15,14 +15,4 @@ class WelcomeController extends Controller
     {
         return view('welcome.index', []);
     }
-
-    /**
-     * Demo stranica za Welcome layout.
-     *
-     * @return Response
-     */
-    public function demo()
-    {
-        return view('welcome.demo', []);
-    }
 }

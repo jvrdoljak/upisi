@@ -12,17 +12,17 @@
                 </a>
 
                 <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
+                        {{-- <a class="nav-link" href="#"><i class="fa fa- user"></i>My Profile</a>
 
-                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a>
+                        <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications <span class="count">13</span></a> --}}
 
-                        <a class="nav-link" href="#"><i class="fa fa -cog"></i>Settings</a>
+                        <a class="nav-link" href="{{ route('register') }}"><i class="fa fa-user-plus"></i> Dodaj novog administratora</a>
 
-                        <a class="nav-link" href="#"><i class="fa fa-power -off"></i>Logout</a>
-                </div>
+                        <a class="nav-link" href="{{ route('logout') }}"><i class="fa fa-power-off"></i> Logout</a>
+                    </div>
             </div>
-
-            <div class="language-select dropdown" id="language-select">
+            
+            {{-- <div class="language-select dropdown" id="language-select">
                 <a class="dropdown-toggle" href="#" data-toggle="dropdown"  id="language" aria-haspopup="true" aria-expanded="true">
                     <i class="flag-icon flag-icon-hr"></i>
                 </a>
@@ -40,7 +40,7 @@
                         <i class="flag-icon flag-icon-es"></i>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>

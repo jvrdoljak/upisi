@@ -1,12 +1,12 @@
 <div class="content mt-3">
-    <div class="col-sm-12">
+    {{-- <div class="col-sm-12">
         <div class="alert  alert-success alert-dismissible fade show" role="alert">
           <span class="badge badge-pill badge-success">Dobrodošli</span> Uspješno ste se prijavili na stranicu.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    </div>
+    </div> --}}
 
     <div class="col-sm-12 col-lg-4">
         <div class="card text-white bg-flat-color-1">
@@ -17,8 +17,8 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="dropdown-menu-content">
-                            <a class="dropdown-item" href="{{ url('/upisi/prijave') }}">Pogledaj prijave</a>
-                            <a class="dropdown-item" href="{{ url('/upisi/kreiranjeranglisti') }}">Pogledaj rang liste</a>
+                            <a class="dropdown-item" href="{{ route('prijave.index') }}">Pogledaj prijave</a>
+                            <a class="dropdown-item" href="{{ route('kreiranjeranglisti.index') }}">Pogledaj rang liste</a>
                         </div>
                     </div>
                 </div>
@@ -46,8 +46,8 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="dropdown-menu-content">
-                            <a class="dropdown-item" href="{{ url('/upisi/smjerovi') }}">Pogledaj listu smjerova</a>
-                            <a class="dropdown-item" href="{{ url('/upisi/smjerovi/create') }}">Dodaj novi smjer</a>
+                            <a class="dropdown-item" href="{{ route('smjerovi.index') }}">Pogledaj listu smjerova</a>
+                            <a class="dropdown-item" href="{{ route('smjerovi.create') }}">Dodaj novi smjer</a>
                         </div>
                     </div>
                 </div>
@@ -74,8 +74,8 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="dropdown-menu-content">
-                            <a class="dropdown-item" href="{{ url('/upisi/predmeti') }}">Pogledaj predmete</a>
-                            <a class="dropdown-item" href="{{ url('/upisi/predmeti/create') }}">Dodaj novi predmet</a>
+                            <a class="dropdown-item" href="{{ route('predmeti.index') }}">Pogledaj predmete</a>
+                            <a class="dropdown-item" href="{{ route('predmeti.create') }}">Dodaj novi predmet</a>
                         </div>
                     </div>
                 </div>
