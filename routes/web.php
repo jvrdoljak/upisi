@@ -30,5 +30,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('upisi/kreiranjeranglisti', 'KreiranjeRangListiController');
     //File upload route
     Route::resource('upisi/files', 'FilesController');
+    //Download route
+    Route::get('upisi/files/download/{filename}',array('as' => 'files.download', 'uses' => 'FilesController@download'));
 });
 

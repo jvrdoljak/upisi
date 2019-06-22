@@ -21,9 +21,23 @@
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Naziv:</strong>
+                <strong>Ime:</strong>
                 {{ $prijava->ime }}
             </div>
+            <div class="form-group">
+                <strong>Prezime:</strong>
+                {{ $prijava->prezime }}
+            </div>
+            <div class="form-group">
+                <strong>Ime oca:</strong>
+                {{ $prijava->ime_oca }}
+            </div>
+            @foreach($fileNames as $fileName)
+                <div class="form-group">
+                    <strong>Dokument:</strong>
+                <a href="{{ route('files.download', $fileName) }}">{{ $fileName }}</a>
+                </div>
+            @endforeach
         </div>
     </div>
 @endsection

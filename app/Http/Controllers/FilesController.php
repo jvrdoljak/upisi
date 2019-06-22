@@ -8,6 +8,10 @@ use App\Prijava;
 
 class FilesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest')->except('download');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -64,5 +68,12 @@ class FilesController extends Controller
     private function fileNameMaker($name){
 
     }
-
+    
+    public function download($filename){
+        $file_path = public_path() . '\pdfs\\' . $filename;
+        if(file_exists($file_path))
+            return response()->download($file_path);
+        else
+            exit('Tražena datoteka ne postoji na serveru');
+    }
 }   
