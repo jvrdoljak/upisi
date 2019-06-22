@@ -65,13 +65,14 @@ class PrijavaController extends Controller
      */
     public function show($id)
     {
-        $fileNames = array();
+        $fileNames = array(array());
         $prijava = Prijava::find($id);
         $files = Files::select()->where('prijava_id', '=', $id)->get();
         $i = 0;
-        foreach($files as $file)
-            $fileNames[$i++] = $file->name;
-    
+        foreach($files as $file){
+            $fileNames[$i]['original'] = $file->original_name;
+            $fileNames[$i++]['unique'] = $file->unique_name;
+        }
         return view('prijave.show', compact('prijava'), compact('fileNames'));
     }
 

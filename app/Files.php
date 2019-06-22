@@ -14,6 +14,6 @@ class Files extends Model
      * @var array
      */
     protected $fillable = [
-        'path', 'prijava_id', 'name'
+        'path', 'prijava_id', 'original_name', 'unique_name'
     ];
 }

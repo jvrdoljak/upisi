@@ -16,11 +16,12 @@ class CreateFilesTable extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->string('path', 255);
             $table->integer('prijava_id')->unsigned();
-            $table->string('name', 255)->unique();
+            $table->string('original_name', 255);
+            $table->string('unique_name', 255)->unique();
             $table->timestamps();
         });
         Schema::table('files', function (Blueprint $table){
-            $table->primary('name');
+            $table->primary('unique_name');
             $table->foreign('prijava_id')->references('id')->on('prijava');
         });
     }

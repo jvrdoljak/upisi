@@ -10,7 +10,7 @@ class FilesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest')->except('download');
+        $this->middleware('auth')->only('download');
     }
     /**
      * Display a listing of the resource.
@@ -41,12 +41,16 @@ class FilesController extends Controller
     public function store(Request $request)
     {
         if($file = $request->file('file')){
-            $name = $file->getClientOriginalName();
-            if(!(Files::where('name', '=', $name)->exists()))
-                if($file->move('pdfs', $name)){
+            $original_name = str_replace(" ","-",$file->getClientOriginalName());
+            $extension = $request->file('file')->getClientOriginalExtension();
+            //Making unique filename original name + md5 of original name and time + extension
+            $unique_name = str_replace(".pdf","-",$original_name) . md5($original_name.time()) . '.' . $extension;
+            if(!(Files::where('unique_name', '=', $unique_name)->exists()))
+                if($file->move('pdfs', $unique_name)){
                     $path = 'public/pdfs';
                     $pdf = new Files();
-                    $pdf->name = $name;
+                    $pdf->original_name = $original_name;
+                    $pdf->unique_name = $unique_name;
                     $pdf->path = $path;
                     $pdf->prijava_id = $request->input('prijava_id');
                     $pdf->save();
@@ -65,10 +69,19 @@ class FilesController extends Controller
     {
         return view('files.fileupload', compact('id'));
     }
-    private function fileNameMaker($name){
-
-    }
-    
+    /** 
+     * Function that make unique filename.
+     *
+     * 
+     */
+    public function uniqueFileNameMaker($original_name,$extension){
+        $original_name = str_replace(" ","-",$original_name);
+        return md5($original_name) . $extension;
+    }   
+    /**
+     * Function for download file.
+     * 
+     */
     public function download($filename){
         $file_path = public_path() . '\pdfs\\' . $filename;
         if(file_exists($file_path))

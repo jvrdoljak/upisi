@@ -35,7 +35,7 @@
             @foreach($fileNames as $fileName)
                 <div class="form-group">
                     <strong>Dokument:</strong>
-                <a href="{{ route('files.download', $fileName) }}">{{ $fileName }}</a>
+                <a href='{{ route('files.download', $fileName['unique']) }}'>{{  $fileName['original'] }}</a>
                 </div>
             @endforeach
         </div>
