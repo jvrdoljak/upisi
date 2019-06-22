@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Prijava;
 use App\OdabirSmjera;
 use App\Files;
+use App\Http\Controllers\FilesController;
 
 class PrijavaController extends Controller
 {
@@ -122,6 +123,7 @@ class PrijavaController extends Controller
      */
     public function destroy($id)
     {
+        Files::select()->where('prijava_id', '=', $id)->delete();
         OdabirSmjera::select()->where('prijava', '=', $id)->delete();
         Prijava::find($id)->delete();
         return redirect()->route('prijave.index')

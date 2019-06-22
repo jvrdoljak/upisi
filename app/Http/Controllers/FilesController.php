@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Files;
 use App\Prijava;
+use File;
 
 class FilesController extends Controller
 {
@@ -88,5 +89,16 @@ class FilesController extends Controller
             return response()->download($file_path);
         else
             exit('Tražena datoteka ne postoji na serveru');
+    }
+
+    /**
+     * Function for delete file from public.
+     * 
+     */
+    public function destroy($filename){
+        $file_path = public_path() . '\pdfs\\' . $filename;
+        if(File::exists($file_path))
+            dd($file_path);
+            
     }
 }   
