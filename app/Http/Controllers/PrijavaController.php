@@ -9,7 +9,7 @@ class PrijavaController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except(array('create','store'));
     }
     /**
      * Display a listing of the resource.

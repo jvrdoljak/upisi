@@ -28,5 +28,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('upisi/prijave', 'PrijavaController');
     Route::resource('upisi/odabirsmjera', 'OdabirSmjeraController');
     Route::resource('upisi/kreiranjeranglisti', 'KreiranjeRangListiController');
+    //File upload route
+    Route::resource('upisi/files', 'FilesController');
 });
 

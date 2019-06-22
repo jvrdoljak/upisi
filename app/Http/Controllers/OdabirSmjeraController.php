@@ -44,7 +44,7 @@ class OdabirSmjeraController extends Controller
             'bodovi' => 'required'
         ]);
         OdabirSmjera::create($request->all());
-        return view('welcome.index')->with('success','Uspješno kreirana prijava');
+        return redirect()->route('files.show', $request['prijava']);
     }
 
     /**
