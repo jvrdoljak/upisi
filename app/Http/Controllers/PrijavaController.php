@@ -8,11 +8,18 @@ use App\OdabirSmjera;
 use App\Files;
 use App\Http\Controllers\FilesController;
 
+use Mail;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+
 class PrijavaController extends Controller
 {
+    protected $salt;
     public function __construct()
     {
-        $this->middleware('auth')->except(array('create','store'));
+        $salt = "SALT-12345qwertz";
+        $this->middleware('auth')->except(array('create','store','verificateEmail'));
     }
     /**
      * Display a listing of the resource.
@@ -53,10 +60,17 @@ class PrijavaController extends Controller
             'prezime' => 'required|max:255',
             'prosjek' => 'required',
         ]);
-        Prijava::create($request->all());
-        return redirect()->route('odabirsmjera.show', $request['email']);
+        
+        $prijava = array(
+            'email' => $request['email'],
+            'ime'   => $request['ime']. ' ' . $request['prezime']
+        );
+        $hash = md5($request['ime'] . $request['prezime'] . $request['email'] . $this->salt);
+        if($this->sendVerificationEmail($prijava, $hash)){
+            Prijava::create($request->all());
+            return redirect()->route('odabirsmjera.show', $request['email']);
+        }
     }
-
 
     /**
      * Display the specified resource.
@@ -128,5 +142,48 @@ class PrijavaController extends Controller
         Prijava::find($id)->delete();
         return redirect()->route('prijave.index')
                         ->with('success','Prijava uspješno pobrisana');
+    }
+
+    /**
+     * 
+     * Function sends verification email with link for api.
+     * 
+     * Arguments are 
+     * 1. array with: email and name
+     * 2. hash
+     * 
+     * Returns bool
+     */
+    public function sendVerificationEmail($prijava, $hash){
+        $data = array(
+            'ime'   => $prijava['ime'],
+            'email' => $prijava['email'],
+            'hash'  => $hash
+        );
+
+        Mail::send('emails.verification', $data, function($message) use ($prijava) {
+            $message->to( $prijava['email'] , $prijava['ime'] )->subject
+               ('Molimo potvrdite vaš email.');
+            $message->from('no-reply@upisi.xyz','upisi.xyz');
+         });
+         return true;
+    }
+
+    /**
+     * 
+     * Function does verification email
+     * 
+     * Functions returns redirection to odabirsmjera route
+     */
+    public function verificateEmail($email, $hash){
+        $prijava = Prijava::select()->where('email', '=', $email)->first();
+        
+        if(md5($prijava->ime . $prijava->prezime . $prijava->email . $this->salt) == $hash){
+            $prijava->verified = 1;
+            $prijava->save();
+            return redirect()->route('odabirsmjera.show', $prijava->email);
+        }
+        else
+            echo 'Email verifikacija nije uspjela';
     }
 }

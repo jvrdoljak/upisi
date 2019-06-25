@@ -56,11 +56,20 @@ class OdabirSmjeraController extends Controller
     public function show($email)
     {
         //dohvacanje ID korisnika koji kreira prijavu
-        $korisnik = Prijava::select()->where('email', '=', $email )->get();
-        $korisnik = $korisnik[0];
-        //dohvacanje svih smjerova
-        $smjerovi = Smjer::all();
-        return view('odabir.show', compact('korisnik'), compact('smjerovi'));
+        $prijava = Prijava::select()->where('email', '=', $email )->get();
+        $prijava = $prijava[0];
+        
+        if($prijava->verified == 1){
+            //dohvacanje svih smjerova
+            $smjerovi = Smjer::all();
+        
+            return view('odabir.show', compact('prijava'), compact('smjerovi'));
+        }
+        else
+            return view('odabir.show')->withErrors(array(
+                "Vaš email nije verificiran.
+                Provjerite email-ove, kako biste nastavili s upisom.
+                Ukoliko niste dobili email pogledajte neželjenu poštu."));
     }
 
     /**

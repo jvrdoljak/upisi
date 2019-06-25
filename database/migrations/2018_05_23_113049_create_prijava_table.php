@@ -20,6 +20,8 @@ class CreatePrijavaTable extends Migration
             $table->string('ime_oca', 255);
             $table->string('email', 255)->unique();
             $table->float('prosjek', 4, 3);
+            $table->integer('verified')->nullable();
+            $table->integer('upisani_smjer')->unsigned()->nullable();
             $table->timestamps();
         });
     }

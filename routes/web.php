@@ -19,18 +19,24 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::get('/register',array('as' => 'register', 'uses' => 'Auth\RegisterController@showRegistrationForm'));
     Route::post('/register','Auth\RegisterController@register');
-
+    
     Route::get('/', 'WelcomeController@index');
 
     Route::get('/upisi/administration', 'UpisiController@dashboard');
     Route::resource('upisi/predmeti', 'PredmetController');
     Route::resource('upisi/smjerovi', 'SmjerController');
     Route::resource('upisi/prijave', 'PrijavaController');
+    Route::get('upisi/prijave/{email}/{hash}', 'PrijavaController@verificateEmail');
     Route::resource('upisi/odabirsmjera', 'OdabirSmjeraController');
     Route::resource('upisi/kreiranjeranglisti', 'KreiranjeRangListiController');
     //File upload route
     Route::resource('upisi/files', 'FilesController');
     //Download route
     Route::get('upisi/files/download/{filename}',array('as' => 'files.download', 'uses' => 'FilesController@download'));
+
+
+    //Route::get('sendbasicemail','MailController@basic_email');
+    Route::get('sendhtmlemail','MailController@html_email');
+    //Route::get('sendattachmentemail','MailController@attachment_email');
 });
 
