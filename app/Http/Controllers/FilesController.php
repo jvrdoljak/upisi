@@ -68,7 +68,15 @@ class FilesController extends Controller
      */
     public function show($id)
     {
-        return view('files.fileupload', compact('id'));
+        $prijava = Prijava::select()->where('id', '=', $id)->get();
+        $prijava = $prijava[0];
+        if($prijava->verified == 1)
+            return view('files.fileupload', compact('id'));
+        else
+            return view('files.fileupload')->withErrors(array("
+            Ne možete pristupiti stranici jer vaš email nije verificiran.
+            Molimo, verificirajte svoj email.
+            "));
     }
     /** 
      * Function that make unique filename.
