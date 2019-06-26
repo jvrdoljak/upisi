@@ -15,7 +15,11 @@ class KreiranjeRangListiController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('makeRankingLists');
+        $this->middleware('auth')->only(array(
+            'makeRankingLists', 
+            'destroyRankingLists', 
+            'sendNotificationEmails'
+        ));
     }
     /**
      * Display a listing of the resource.
@@ -121,21 +125,31 @@ class KreiranjeRangListiController extends Controller
                         'ime'                   =>  $prijava->ime." ".$prijava->prezime,
                         'id_smjera'             =>  $id_smjera
                     );
-                    Mail::send('emails.rankinginformation.truenotification', $data, function($message) use ($prijava) {
-                        $message->to( $prijava->email , $prijava->ime." ".$prijava->prezime )->subject
-                        ('Obavijest o upisu u srednju školu.');
-                        $message->from('no-reply@upisi.xyz','upisi.xyz');
-                    });
+                    try{
+                        Mail::send('emails.rankinginformation.truenotification', $data, function($message) use ($prijava) {
+                            $message->to( $prijava->email , $prijava->ime." ".$prijava->prezime )->subject
+                            ('Obavijest o upisu u srednju školu.');
+                            $message->from('no-reply@upisi.xyz','upisi.xyz');
+                        });
+                    } catch(\Swift_TransportException $e){
+                        return redirect()->route('upisi.administration')
+                                ->with('error', 'Email se ne može poslati, pokušajte kasnije.');
+                    }
                 }
                 elseif(($prijava->upisani_smjer == null) && ($prijava->verified == 1)){
                     $data = array(
                         'ime'   =>  $prijava->ime." ".$prijava->prezime,
                     );
-                    Mail::send('emails.rankinginformation.falsenotification', $data, function($message) use ($prijava) {
-                        $message->to( $prijava->email , $prijava->ime." ".$prijava->prezime )->subject
-                        ('Obavijest o upisu u srednju školu.');
-                        $message->from('no-reply@upisi.xyz','upisi.xyz');
-                    });
+                    try{
+                        Mail::send('emails.rankinginformation.falsenotification', $data, function($message) use ($prijava) {
+                            $message->to( $prijava->email , $prijava->ime." ".$prijava->prezime )->subject
+                            ('Obavijest o upisu u srednju školu.');
+                            $message->from('no-reply@upisi.xyz','upisi.xyz');
+                        });
+                    } catch(\Swift_TransportException $e){
+                        return redirect()->route('upisi.administration')
+                                ->with('error', 'Email se ne može poslati, pokušajte kasnije.');
+                    }
                 }
                 else
                     continue;

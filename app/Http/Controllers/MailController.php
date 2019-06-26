@@ -20,6 +20,7 @@ class MailController extends Controller {
    // }
    
    public function html_email() {
+      try{
       $data = array('name'=>"Upisi");
       
       Mail::send('emails.orders.email', $data, function($message) {
@@ -27,7 +28,9 @@ class MailController extends Controller {
             ('Laravel HTML Testing Mail');
          $message->from('no-reply@upisi.xyz','upisi.xyz');
       });
-      echo "HTML Email Sent. Check your inbox.";
+      }catch(\Swift_TransportException $e){
+         echo "Mail ne moze biti poslan.";
+      }
    }
 
    // public function attachment_email() {

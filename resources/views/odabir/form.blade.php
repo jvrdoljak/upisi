@@ -11,8 +11,8 @@
 
 ?>
 
-{{ Form::select('prijava', $izborKorisnik , null, array('class' => 'form-control mt-2')) }}
-{{ Form::select('izbor', array('1' => 'Prvi izbor'), null, array('class' => 'form-control mt-2')) }}
-{{ Form::select('smjer', $izborSmjera, null, array('class' => 'form-control mt-2')) }}
+{{ Form::select('prijava', $izborKorisnik , null, array('class' => 'form-control mt-2', 'style' => 'display:none;')) }}
+{{ Form::select('izbor', array('1' => 'Prvi izbor'), null, array('class' => 'form-control mt-2', 'style' => 'display:none;')) }}
+{{ Form::select('smjer', $izborSmjera, null, array('class' => 'form-control mt-2',)) }}
 {{ Form::select('bodovi', $bodovi, null, array('class' => 'form-control mt-2', 'style' => 'display:none;')) }}
 {{ Form::submit('Spremi', array('class' => 'btn btn-primary form-control mt-2')) }}

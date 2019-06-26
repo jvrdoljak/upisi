@@ -69,6 +69,9 @@ class PrijavaController extends Controller
         if($this->sendVerificationEmail($prijava, $hash)){
             Prijava::create($request->all());
             return redirect()->route('odabirsmjera.show', $request['email']);
+        }else{
+            return redirect()->route('prijave.create')->
+                            with('error', 'Verifikacijski email se ne može poslati, pokušajte kasnije.');
         }
     }
 
@@ -160,13 +163,16 @@ class PrijavaController extends Controller
             'email' => $prijava['email'],
             'hash'  => $hash
         );
-
-        Mail::send('emails.verification', $data, function($message) use ($prijava) {
-            $message->to( $prijava['email'] , $prijava['ime'] )->subject
-               ('Molimo potvrdite vaš email.');
-            $message->from('no-reply@upisi.xyz','upisi.xyz');
-         });
-         return true;
+        try{
+            Mail::send('emails.verification', $data, function($message) use ($prijava) {
+                $message->to( $prijava['email'] , $prijava['ime'] )->subject
+                ('Molimo potvrdite vaš email.');
+                $message->from('no-reply@upisi.xyz','upisi.xyz');
+            });
+        } catch(\Swift_TransportException $e){
+            return false;
+        }
+        return true;
     }
 
     /**

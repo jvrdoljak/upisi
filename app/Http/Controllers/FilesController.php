@@ -11,18 +11,8 @@ class FilesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('download');
+        $this->middleware('auth')->only(array('download', 'destroy'));
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -41,24 +31,28 @@ class FilesController extends Controller
      */
     public function store(Request $request)
     {
-        if($file = $request->file('file')){
-            $original_name = str_replace(" ","-",$file->getClientOriginalName());
-            $extension = $request->file('file')->getClientOriginalExtension();
-            //Making unique filename original name + md5 of original name and time + extension
-            $unique_name = str_replace(".pdf","-",$original_name) . md5($original_name.time()) . '.' . $extension;
-            if(!(Files::where('unique_name', '=', $unique_name)->exists()))
-                if($file->move('pdfs', $unique_name)){
-                    $path = 'public/pdfs';
-                    $pdf = new Files();
-                    $pdf->original_name = $original_name;
-                    $pdf->unique_name = $unique_name;
-                    $pdf->path = $path;
-                    $pdf->prijava_id = $request->input('prijava_id');
-                    $pdf->save();
-                    return view('welcome.index')->with('success','Uspješno kreirana prijava');
-                }
-            return redirect()->back();
+        $files = $request->file();
+        if(!empty($files)){
+            foreach($files as $file){
+                $original_name = str_replace(" ","-",$file->getClientOriginalName());
+                $extension = $file->getClientOriginalExtension();
+                //Making unique filename original name + md5 of original name and time + extension
+                $unique_name = str_replace(".pdf","-",$original_name) . md5($original_name.time()) . '.' . $extension;
+                if(!(Files::where('unique_name', '=', $unique_name)->exists()))
+                    if($file->move('pdfs', $unique_name)){
+                        $path = 'public/pdfs';
+                        $pdf = new Files();
+                        $pdf->original_name = $original_name;
+                        $pdf->unique_name = $unique_name;
+                        $pdf->path = $path;
+                        $pdf->prijava_id = $request->input('prijava_id');
+                        $pdf->save();
+                    }
+            }
+            return view('welcome.index')->with('success','Uspješno kreirana prijava');   
         }
+        else
+            return redirect()->back()->with('error', 'Dokumenti nisu priloženi. Pokušajte ponovno.');
     }
     /**
      * Display the specified resource.
@@ -70,23 +64,34 @@ class FilesController extends Controller
     {
         $prijava = Prijava::select()->where('id', '=', $id)->get();
         $prijava = $prijava[0];
-        if($prijava->verified == 1)
-            return view('files.fileupload', compact('id'));
+        if($prijava->verified == 1){
+            $files = array(
+                0   =>  array(
+                        'name'      => 'file-1',
+                        'message'   =>  'Ispod priložite svjedodžbu 5. razreda'
+                    ),        
+                1   =>  array(
+                        'name'      => 'file-2',
+                        'message'   =>  'Ispod priložite svjedodžbu 6. razreda'
+                    ),
+                2   =>  array(
+                        'name'      => 'file-3',
+                        'message'   =>  'Ispod priložite svjedodžbu 7. razreda'
+                    ),
+                3   =>  array(
+                        'name'      => 'file-4',
+                        'message'   =>  'Ispod priložite svjedodžbu 8. razreda'
+                    ),
+            );
+            return view('files.fileupload', compact('id'),compact('files'));
+        }
         else
             return view('files.fileupload')->withErrors(array("
             Ne možete pristupiti stranici jer vaš email nije verificiran.
             Molimo, verificirajte svoj email.
             "));
     }
-    /** 
-     * Function that make unique filename.
-     *
-     * 
-     */
-    public function uniqueFileNameMaker($original_name,$extension){
-        $original_name = str_replace(" ","-",$original_name);
-        return md5($original_name) . $extension;
-    }   
+ 
     /**
      * Function for download file.
      * 
