@@ -101,7 +101,7 @@ class FilesController extends Controller
         if(file_exists($file_path))
             return response()->download($file_path);
         else
-            exit('Tražena datoteka ne postoji na serveru');
+            return redirect()->back()->with('error', 'Tražena datoteka ne postoji na serveru');
     }
 
     /**

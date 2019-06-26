@@ -12,6 +12,7 @@ use Mail;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use File;
 
 class PrijavaController extends Controller
 {
@@ -28,7 +29,7 @@ class PrijavaController extends Controller
      */
     public function index()
     {
-        $prijave = Prijava::latest()->paginate(10);
+        $prijave = Prijava::latest()->where('verified','=', 1)->paginate(10);
         return view('prijave.index', compact('prijave'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
@@ -140,7 +141,12 @@ class PrijavaController extends Controller
      */
     public function destroy($id)
     {
-        Files::select()->where('prijava_id', '=', $id)->delete();
+        $files = Files::select()->where('prijava_id', '=', $id)->get();
+        foreach($files as $file){
+            if(File::exists($path = public_path('\pdfs\\'.$file->unique_name)))
+                File::delete($path);
+        }
+        $files = Files::select()->where('prijava_id', '=', $id)->delete();
         OdabirSmjera::select()->where('prijava', '=', $id)->delete();
         Prijava::find($id)->delete();
         return redirect()->route('prijave.index')
