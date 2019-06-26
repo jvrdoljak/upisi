@@ -68,7 +68,7 @@ class KreiranjeRangListiController extends Controller
             
             foreach($prijave_smjerovi as $prijava_smjer)
                 foreach($prijave as $prijava)
-                    if($prijava->id == $prijava_smjer->prijava){
+                    if($prijava->id == $prijava_smjer->prijava && ($prijava->verified != null || $prijava->verified != 0)){
                         $prijava->upisani_smjer = $prijava_smjer->smjer;
                         $prijava->save();
                     }
