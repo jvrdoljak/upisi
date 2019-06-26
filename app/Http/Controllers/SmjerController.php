@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Smjer;
+use App\Prijava;
 use App\OdabirSmjera;
 class SmjerController extends Controller
 {
@@ -104,9 +105,15 @@ class SmjerController extends Controller
      */
     public function destroy($id)
     {
-        OdabirSmjera::select()->where('smjer', '=', $id)->delete();
-        Smjer::find($id)->delete();
-        return redirect()->route('smjerovi.index')
-                        ->with('success','Smjer deleted successfully');
+        if(Prijava::select()->where('upisani_smjer', '=', $id)->count() > 0)
+            return redirect()->route('smjerovi.index')
+                             ->withErrors(array(
+                                 "Smjer se ne može izbrisati, jer su učenici upisani u isti."));
+        else{
+            OdabirSmjera::select()->where('smjer', '=', $id)->delete();
+            Smjer::find($id)->delete();
+            return redirect()->route('smjerovi.index')
+                             ->with('success','Smjer deleted successfully');
+        }
     }
 }

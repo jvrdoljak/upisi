@@ -16,7 +16,11 @@
           <p>{{ $message }}</p>
         </div>
       @endif
-
+      @if($errors->any())
+        <div class="alert alert-danger" role="alert">
+          <p>{{ $errors->first() }}</p>
+        </div>
+      @endif
       <div class="row">
         <div class="col-lg-12 margin-tb">
           <div class="pull-right">

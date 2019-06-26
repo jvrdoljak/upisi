@@ -1,13 +1,14 @@
 <div class="content mt-3">
-    {{-- <div class="col-sm-12">
-        <div class="alert  alert-success alert-dismissible fade show" role="alert">
-          <span class="badge badge-pill badge-success">Dobrodošli</span> Uspješno ste se prijavili na stranicu.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+    @if($message = Session::get('success'))
+        <div class="col-sm-12">
+            <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                {{ $message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
-    </div> --}}
-
+    @endif
     <div class="col-sm-12 col-lg-4">
         <div class="card text-white bg-flat-color-1">
             <div class="card-body pb-0">
@@ -92,4 +93,13 @@
         </div>
     </div>
     <!--/.col-->
+    <div class="col-sm-12 col-lg-4">
+    <a href="{{ route('kreiranjeranglisti.makerankinglists')}}" class="btn btn-success btn-block">Kreiraj rang liste</a>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+        <a href="{{ route('kreiranjeranglisti.destroyRankingLists')}}" class="btn btn-danger btn-block">Pobriši rang liste</a>
+    </div>
+    <div class="col-sm-12 col-lg-4">
+            <a href="{{ route('kreiranjeranglisti.sendNotificationEmails', "rankinginformation")}}" class="btn btn-primary btn-block">Pošalji email-ove s obavijestima o upisu</a>
+    </div>
 </div> <!-- .content -->

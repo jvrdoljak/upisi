@@ -4,7 +4,7 @@
 
     <div class="card">
         <div class="card-header">
-        @if(isset($korisnici))
+        @if(isset($prijave))
         <strong class="card-title">Rang lista od smjera {{ $nazivSmjera }}</strong>
         </div>
 
@@ -17,19 +17,25 @@
                     <th>Ime oca</th>
                     <th>Prosjek</th>
                 </tr>
-                <?php $i = 0; ?>
-                @foreach ($korisnici as $korisnik)
+                <?php $i = 0;?>
+
+                @foreach ($prijave as $prijava)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $korisnik[0]->ime }}</td>
-                        <td>{{ $korisnik[0]->prezime }}</td>
-                        <td>{{ $korisnik[0]->ime_oca }}</td>
-                        <td>{{ $korisnik[0]->prosjek }}</td>
+                        <td>{{ $prijava->ime }}</td>
+                        <td>{{ $prijava->prezime }}</td>
+                        <td>{{ $prijava->ime_oca }}</td>
+                        <td>{{ $prijava->prosjek }}</td>
                     </tr>
                 @endforeach
             </table>
         </div>
+        @elseif($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <p>{{ $errors->first() }}</p>
+            </div>
         @endif
+
     </div>
 
     @include('layouts.welcome.footer')

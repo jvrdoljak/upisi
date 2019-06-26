@@ -22,13 +22,36 @@ Route::group(['middleware' => ['web']], function () {
     
     Route::get('/', 'WelcomeController@index');
 
-    Route::get('/upisi/administration', 'UpisiController@dashboard');
+    Route::get('/upisi/administration', array(
+        'as'    =>  'upisi.administration',
+        'uses'  =>  'UpisiController@dashboard'
+    ));
     Route::resource('upisi/predmeti', 'PredmetController');
     Route::resource('upisi/smjerovi', 'SmjerController');
     Route::resource('upisi/prijave', 'PrijavaController');
     Route::get('upisi/prijave/{email}/{hash}', 'PrijavaController@verificateEmail');
     Route::resource('upisi/odabirsmjera', 'OdabirSmjeraController');
-    Route::resource('upisi/kreiranjeranglisti', 'KreiranjeRangListiController');
+    //Route::resource('upisi/kreiranjeranglisti', 'KreiranjeRangListiController');
+    Route::get('upisi/kreiranjeranglisti', array(
+        'as'    =>  'kreiranjeranglisti.index',
+        'uses'  =>  'KreiranjeRangListiController@index'
+    ));
+    Route::get('upisi/kreiranjeranglisti/{kreiranjeranglisti}', array(
+        'as'    =>  'kreiranjeranglisti.show',
+        'uses'  =>  'KreiranjeRangListiController@show'
+    ));
+    Route::get('upisi/makerankinglists', array(
+        'as'    => 'kreiranjeranglisti.makerankinglists', 
+        'uses'  => 'KreiranjeRangListiController@makeRankingLists'
+    ));
+    Route::get('upisi/destroyrankinglists', array(
+        'as'    => 'kreiranjeranglisti.destroyRankingLists', 
+        'uses'  => 'KreiranjeRangListiController@destroyRankingLists'
+    ));
+    Route::get('upisi/sendnotificationemails/{notificationtype}', array(
+        'as'    => 'kreiranjeranglisti.sendNotificationEmails', 
+        'uses'  => 'KreiranjeRangListiController@sendNotificationEmails'
+    ));
     //File upload route
     Route::resource('upisi/files', 'FilesController');
     //Download route

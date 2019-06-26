@@ -14,6 +14,6 @@ class Smjer extends Model
      * @var array
      */
     protected $fillable = [
-        'naziv'
+        'id','naziv'
     ];
 }

@@ -18,7 +18,7 @@
       @if(Auth::check())
         <a class="js-scroll-trigger" href="{{ route('logout') }}">Odjavi se</a>
       @else
-        <a class="js-scroll-trigger" href="{{ route('login') }}">Prijavi se</a>
+        <a class="js-scroll-trigger" href="{{ route('login') }}">Administracija</a>
       @endif
     </li>
   </ul>
